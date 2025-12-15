@@ -6,61 +6,49 @@ An intentionally vulnerable banking web application designed for educational pur
 
 **This application is intentionally vulnerable and should ONLY be used for educational purposes in a controlled environment. Do not deploy this application on public networks or use it with real credentials.**
 
-## ⚡ Quick Start
+## ⚡ Quick Start - One Command Setup!
 
-### For macOS:
+### Step 1: Install Prerequisites (One-time)
 
-1. **Install prerequisites** (one-time setup):
-   ```bash
-   brew install php gcc make git
-   ```
+**macOS:**
+```bash
+brew install php gcc make git
+```
 
-2. **Clone and run**:
-   ```bash
-   cd ~
-   git clone https://github.com/indranilroy99/Bank-of-Pluto.git
-   cd Bank-of-Pluto/buffer-overflow
-   ./start.sh
-   ```
+**Linux (Kali/Ubuntu):**
+```bash
+sudo apt update && sudo apt install -y apache2 php libapache2-mod-php gcc make git
+```
 
-3. **Open your browser**: `http://localhost:8080`
+### Step 2: Clone and Start
 
-4. **To stop**: Press `Ctrl+C` in the terminal, or run `./stop.sh`
+```bash
+cd ~
+git clone https://github.com/indranilroy99/Bank-of-Pluto.git
+cd Bank-of-Pluto
+./start.sh
+```
 
-### For Linux (Kali/Ubuntu):
+**That's it!** Open `http://localhost:8080` in your browser.
 
-1. **Install prerequisites** (one-time setup):
-   ```bash
-   sudo apt update
-   sudo apt install -y apache2 php libapache2-mod-php gcc make git
-   ```
+### Step 3: Stop (when done)
 
-2. **Clone and setup**:
-   ```bash
-   cd ~
-   git clone https://github.com/indranilroy99/Bank-of-Pluto.git
-   cd Bank-of-Pluto/buffer-overflow
-   sudo cp -r . /var/www/html/buffer-overflow
-   sudo chmod +x /var/www/html/buffer-overflow/bin/*
-   sudo chmod +x /var/www/html/buffer-overflow/cgi-bin/*.php
-   ```
+```bash
+./stop.sh
+```
 
-3. **Configure Apache** (add to `/etc/apache2/sites-available/000-default.conf`):
-   ```apache
-   <Directory /var/www/html/buffer-overflow>
-       Options +ExecCGI
-       AddHandler cgi-script .php
-       Require all granted
-   </Directory>
-   ```
+### Step 4: Cleanup (remove everything)
 
-4. **Start Apache**:
-   ```bash
-   sudo a2enmod cgi
-   sudo systemctl restart apache2
-   ```
+```bash
+./cleanup.sh
+```
 
-5. **Open your browser**: `http://localhost/buffer-overflow/`
+---
+
+**Super Simple Commands:**
+- `./start.sh` - Start the application
+- `./stop.sh` - Stop the application  
+- `./cleanup.sh` - Remove everything and restore system
 
 ---
 
