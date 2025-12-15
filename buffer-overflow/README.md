@@ -1,4 +1,4 @@
-# 🏦 SecureBank - Buffer Overflow Vulnerable Web Application
+# 🏦 Bank of Pluto - Buffer Overflow Vulnerable Web Application
 
 An intentionally vulnerable banking web application designed for educational purposes to demonstrate buffer overflow vulnerabilities. This application is perfect for cybersecurity students learning about buffer overflow attacks in a controlled environment.
 
@@ -18,7 +18,7 @@ An intentionally vulnerable banking web application designed for educational pur
 
 ## 🎯 Overview
 
-SecureBank is a simple banking web application that demonstrates three types of buffer overflow vulnerabilities:
+Bank of Pluto is a simple banking web application that demonstrates three types of buffer overflow vulnerabilities:
 
 1. **Stack-based Buffer Overflow** - Transfer Funds feature
 2. **Heap-based Buffer Overflow** - Transaction History feature
@@ -181,7 +181,7 @@ sudo systemctl status apache2
 http://localhost/buffer-overflow/
 ```
 
-You should see the SecureBank homepage.
+You should see the Bank of Pluto homepage.
 
 ## 📚 Educational Objectives
 

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# SecureBank Setup Script
+# Bank of Pluto Setup Script
 # This script helps set up the vulnerable web application on Kali Linux
 
-echo "🏦 SecureBank - Buffer Overflow Vulnerable App Setup"
+echo "🏦 Bank of Pluto - Buffer Overflow Vulnerable App Setup"
 echo "=================================================="
 echo ""
 
@@ -178,7 +178,7 @@ echo "📋 Next steps:"
 echo "1. Open your browser and navigate to:"
 echo "   http://localhost/buffer-overflow/"
 echo ""
-echo "2. If you see the SecureBank homepage, setup is successful!"
+echo "2. If you see the Bank of Pluto homepage, setup is successful!"
 echo ""
 echo "3. Read README.md for exploitation instructions"
 echo ""
