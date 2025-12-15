@@ -22,45 +22,53 @@ exec($command, $output, $return_code);
 // Get original format before escaping
 $original_format = $_POST['format'] ?? '';
 
-// Check if format string attack was used
-$format_attack = false;
-if (strpos($original_format, '%') !== false) {
-    $format_attack = true;
-}
-
 // Return output
 $output_text = implode("\n", $output);
 echo $output_text;
 
-// Provide clear feedback for format string vulnerability
-if ($format_attack) {
+// Check for format string attacks and provide realistic but informative responses
+$format_attack = false;
+$advanced_payload = false;
+
+if (strpos($original_format, '%') !== false) {
+    $format_attack = true;
+    
+    // Detect advanced payloads
+    if (strpos($original_format, '%p') !== false || 
+        strpos($original_format, '%n') !== false ||
+        substr_count($original_format, '%') > 5) {
+        $advanced_payload = true;
+    }
+}
+
+// For format string attacks, show realistic output but with leaked data visible
+if ($format_attack && !$advanced_payload) {
+    // Basic format string - just show the output (memory leak is visible in the statement)
+    // No extra message, looks like normal output but with hex values
+} elseif ($format_attack && $advanced_payload) {
+    // Advanced payload - show more "juicy" information
     echo "\n\n";
-    echo "╔════════════════════════════════════════════════════════════╗\n";
-    echo "║  🔍 FORMAT STRING VULNERABILITY EXPLOITED! 🔍              ║\n";
-    echo "╠════════════════════════════════════════════════════════════╣\n";
-    echo "║  What happened:                                            ║\n";
-    $format_display = substr($original_format, 0, 40);
-    echo "║  • You used format specifiers: " . str_pad($format_display, 40) . "║\n";
-    echo "║                                                            ║\n";
-    echo "║  Format Specifier Meanings:                                ║\n";
-    echo "║  • %x = reads hexadecimal values from the stack          ║\n";
-    echo "║  • %p = reads pointer addresses from memory               ║\n";
-    echo "║  • %s = attempts to read strings from memory addresses    ║\n";
-    echo "║  • %n = writes to memory (number of chars printed)        ║\n";
-    echo "║                                                            ║\n";
-    echo "║  ⚠️  The values you see above are MEMORY CONTENTS         ║\n";
-    echo "║     leaked from the program's stack!                      ║\n";
-    echo "║                                                            ║\n";
-    echo "║  This is a FORMAT STRING VULNERABILITY!                   ║\n";
-    echo "║  Attackers can use this to:                               ║\n";
-    echo "║  • Read sensitive data from memory                        ║\n";
-    echo "║  • Write to arbitrary memory locations (using %n)         ║\n";
-    echo "║  • Potentially execute arbitrary code                     ║\n";
-    echo "╚════════════════════════════════════════════════════════════╝\n";
+    echo "─────────────────────────────────────────────────────────────\n";
+    echo "Statement Generation Complete\n";
+    echo "─────────────────────────────────────────────────────────────\n";
+    echo "Format: " . htmlspecialchars($original_format) . "\n";
+    echo "Note: Advanced format processing detected.\n";
+    echo "Memory addresses and stack contents have been included in output.\n";
+    echo "\n";
+    echo "System Information Leaked:\n";
+    echo "• Stack pointer values: Visible in format output above\n";
+    echo "• Memory layout: Revealed through pointer addresses\n";
+    echo "• Potential sensitive data: May be present in stack dump\n";
+    echo "\n";
+    echo "⚠️  This output contains low-level system information.\n";
+    echo "─────────────────────────────────────────────────────────────\n";
 }
 
 if ($return_code !== 0) {
-    echo "\n[Error: Program exited with code $return_code]";
+    echo "\n\nError Code: STM-4001\n";
+    echo "Statement Generation Error\n";
+    echo "─────────────────────────────────────────────\n";
+    echo "Unable to generate statement in the requested format.\n";
+    echo "Please try a different format (PDF, TXT, or HTML).\n";
 }
 ?>
-

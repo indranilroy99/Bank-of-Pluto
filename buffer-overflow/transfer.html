@@ -45,12 +45,6 @@
                 </form>
 
                 <div id="result" class="result-box"></div>
-
-                <div class="vuln-hint">
-                    <h3>🔍 Vulnerability: Stack Buffer Overflow</h3>
-                    <p>This form is vulnerable to stack-based buffer overflow. The backend uses unsafe C functions like <code>strcpy()</code> without proper bounds checking.</p>
-                    <p><strong>Hint:</strong> Try sending a very long string in the recipient field (more than 50 characters).</p>
-                </div>
             </div>
         </main>
 

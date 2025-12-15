@@ -25,8 +25,6 @@ void generate_statement(char *account, char *format) {
     printf("2024-01-15 | Online Purchase       | -$150.00  | $9,450.00\n");
     printf("2024-01-10 | Bill Payment          | -$200.00  | $9,600.00\n");
     printf("2024-01-05 | Interest Earned       | $50.00    | $9,800.00\n");
-    
-    printf("\nEnd of Statement\n");
 }
 
 int main(int argc, char *argv[]) {

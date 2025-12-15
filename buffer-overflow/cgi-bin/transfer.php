@@ -28,25 +28,23 @@ exec($command, $output, $return_code);
 // Return output
 echo implode("\n", $output);
 
-// Provide clear feedback for buffer overflow
+// Realistic bank error messages for buffer overflow
 if ($return_code === 133 || $return_code === 139) {
     echo "\n\n";
-    echo "╔════════════════════════════════════════════════════════════╗\n";
-    echo "║  🚨 BUFFER OVERFLOW DETECTED! 🚨                          ║\n";
-    echo "╠════════════════════════════════════════════════════════════╣\n";
-    echo "║  Exit Code: $return_code (Segmentation Fault)              ║\n";
-    echo "║                                                            ║\n";
-    echo "║  What happened:                                            ║\n";
-    echo "║  • The recipient field buffer is only 50 bytes            ║\n";
-    echo "║  • You sent more than 50 characters                        ║\n";
-    echo "║  • The program tried to write beyond the buffer           ║\n";
-    echo "║  • This caused a SEGMENTATION FAULT (memory violation)    ║\n";
-    echo "║                                                            ║\n";
-    echo "║  This is a STACK BUFFER OVERFLOW vulnerability!            ║\n";
-    echo "║  In a real attack, this could allow code execution.       ║\n";
-    echo "╚════════════════════════════════════════════════════════════╝\n";
+    echo "Error Code: TRF-5001\n";
+    echo "Transaction Processing Error\n";
+    echo "─────────────────────────────────────────────\n";
+    echo "We encountered an internal error while processing your transfer request.\n";
+    echo "Please verify that the recipient account number is correct and try again.\n\n";
+    echo "If the problem persists, please contact our support team at:\n";
+    echo "support@bankofpluto.com or call 1-800-BANK-PLT\n\n";
+    echo "Reference ID: " . substr(md5(time() . $recipient), 0, 12) . "\n";
+    echo "Timestamp: " . date('Y-m-d H:i:s') . "\n";
 } elseif ($return_code !== 0) {
-    echo "\n\n[Error: Program exited with code $return_code]";
+    echo "\n\nError Code: TRF-5000\n";
+    echo "Transaction Processing Error\n";
+    echo "─────────────────────────────────────────────\n";
+    echo "Unable to process your request at this time.\n";
+    echo "Please try again later or contact support.\n";
 }
 ?>
-
