@@ -287,7 +287,7 @@ rm -rf bin/
 
 ## 📚 Educational Objectives
 
-After completing this lab, students should understand:
+After completing this lab, you will be able to understand:
 
 1. **Buffer Overflow Concepts**:
    - Difference between stack and heap overflows
