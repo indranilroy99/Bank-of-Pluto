@@ -34,19 +34,19 @@ The application consists of:
 
 ## 🔓 Vulnerabilities
 
-### 1. Stack Buffer Overflow (`stack_overflow.c`)
+### 1. Stack Buffer Overflow (`buffer-overflow/src/stack_overflow.c`)
 - **Location**: Transfer Funds page
 - **Vulnerability**: Uses `strcpy()` without bounds checking
 - **Buffer Size**: 50 bytes
 - **Impact**: Can overwrite return addresses and execute arbitrary code
 
-### 2. Heap Buffer Overflow (`heap_overflow.c`)
+### 2. Heap Buffer Overflow (`buffer-overflow/src/heap_overflow.c`)
 - **Location**: Transaction History page
 - **Vulnerability**: Unsafe memory allocation and copying
 - **Buffer Size**: 100 bytes
 - **Impact**: Can corrupt heap metadata and potentially execute code
 
-### 3. Format String Vulnerability (`format_string.c`)
+### 3. Format String Vulnerability (`buffer-overflow/src/format_string.c`)
 - **Location**: Account Statement page
 - **Vulnerability**: User input directly passed to `printf()`
 - **Impact**: Can read/write arbitrary memory locations
@@ -113,9 +113,10 @@ chmod +x *.sh
 
 ### Quick Start (Recommended)
 
-Simply run the start script:
+Navigate to the buffer-overflow directory and run the start script:
 
 ```bash
+cd buffer-overflow
 ./start.sh
 ```
 
@@ -129,6 +130,11 @@ This script will:
 
 #### For macOS:
 
+Navigate to the buffer-overflow directory:
+```bash
+cd buffer-overflow
+```
+
 The start script uses PHP's built-in server:
 
 ```bash
@@ -139,12 +145,17 @@ Then open your browser to: `http://localhost:8080`
 
 #### For Linux:
 
-1. **Copy files to web directory**:
+1. **Navigate to buffer-overflow directory**:
+```bash
+cd ~/Bank-of-Pluto/buffer-overflow
+```
+
+2. **Copy files to web directory**:
 ```bash
 sudo cp -r ~/Bank-of-Pluto/buffer-overflow /var/www/html/buffer-overflow
 ```
 
-2. **Configure Apache**:
+3. **Configure Apache**:
 ```bash
 sudo a2enmod cgi
 sudo a2enmod rewrite
@@ -172,29 +183,30 @@ Add inside `<VirtualHost *:80>`:
 </Directory>
 ```
 
-3. **Set permissions**:
+4. **Set permissions**:
 ```bash
 sudo chown -R www-data:www-data /var/www/html/buffer-overflow
 sudo chmod +x /var/www/html/buffer-overflow/bin/*
 sudo chmod +x /var/www/html/buffer-overflow/cgi-bin/*.php
 ```
 
-4. **Start Apache**:
+5. **Start Apache**:
 ```bash
 sudo systemctl start apache2
 sudo systemctl status apache2
 ```
 
-5. **Access the application**:
+6. **Access the application**:
 Open your browser to: `http://localhost/buffer-overflow/`
 
 ## 🛑 Stopping the Application
 
 ### Quick Stop
 
-Run the stop script:
+Navigate to the buffer-overflow directory and run the stop script:
 
 ```bash
+cd buffer-overflow
 ./stop.sh
 ```
 
@@ -221,6 +233,7 @@ sudo systemctl stop apache2
 After completing the lab, you can completely remove all installed files and configurations using the cleanup script:
 
 ```bash
+cd buffer-overflow
 ./cleanup.sh
 ```
 
@@ -240,6 +253,7 @@ If you prefer to clean up manually:
 #### For macOS:
 
 ```bash
+cd buffer-overflow
 # Stop the server
 ./stop.sh
 
@@ -320,9 +334,10 @@ sudo systemctl restart apache2
 # Linux
 sudo a2enmod cgi
 sudo systemctl restart apache2
+cd buffer-overflow
 chmod +x cgi-bin/*.php
 
-# macOS - Make sure router.php is in the root directory
+# macOS - Make sure router.php is in the buffer-overflow directory
 ```
 
 ### Issue: Permission denied errors (Linux)
@@ -341,7 +356,7 @@ sudo chmod +x /var/www/html/buffer-overflow/cgi-bin/*.php
 lsof -ti:8080 | xargs kill
 ```
 
-Or modify `start.sh` to use a different port.
+Or modify `buffer-overflow/start.sh` to use a different port.
 
 ### Issue: Program crashes immediately
 
@@ -372,3 +387,4 @@ Inspired by OWASP Juice Shop and other intentionally vulnerable applications des
 ---
 
 **Happy Learning! Stay Secure! 🔒**
+

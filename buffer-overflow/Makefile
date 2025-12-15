@@ -1,5 +1,13 @@
 CC = gcc
-CFLAGS = -fno-stack-protector -z execstack -g -O0
+# Detect OS and set appropriate flags
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Darwin)
+    # macOS flags
+    CFLAGS = -fno-stack-protector -g -O0
+else
+    # Linux flags
+    CFLAGS = -fno-stack-protector -z execstack -g -O0
+endif
 SRC_DIR = src
 BIN_DIR = bin
 
