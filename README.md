@@ -25,7 +25,7 @@ sudo apt update && sudo apt install -y apache2 php libapache2-mod-php gcc make g
 ```bash
 cd ~
 git clone https://github.com/indranilroy99/Bank-of-Pluto.git
-cd Bank-of-Pluto
+cd Bank-of-Pluto/buffer-overflow
 ./start.sh
 ```
 
@@ -34,18 +34,20 @@ cd Bank-of-Pluto
 ### Step 3: Stop (when done)
 
 ```bash
+cd ~/Bank-of-Pluto/buffer-overflow
 ./stop.sh
 ```
 
 ### Step 4: Cleanup (remove everything)
 
 ```bash
+cd ~/Bank-of-Pluto/buffer-overflow
 ./cleanup.sh
 ```
 
 ---
 
-**Super Simple Commands:**
+**Super Simple Commands (run from `buffer-overflow` directory):**
 - `./start.sh` - Start the application
 - `./stop.sh` - Stop the application  
 - `./cleanup.sh` - Remove everything and restore system
@@ -149,15 +151,15 @@ This creates three binaries in the `bin/` directory:
 
 ## 🚀 Running the Application
 
-### macOS - Super Simple:
+### Super Simple - One Command:
 
-Just run:
+From the `buffer-overflow` directory, just run:
 ```bash
 ./start.sh
 ```
 
 The script will:
-- ✅ Automatically find PHP (even if installed via Homebrew)
+- ✅ Automatically find PHP (even if installed via Homebrew on macOS)
 - ✅ Compile binaries if needed
 - ✅ Start the server on `http://localhost:8080`
 - ✅ Show you the URL to open
