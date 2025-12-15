@@ -35,18 +35,18 @@ chmod +x bin/* 2>/dev/null
 chmod +x cgi-bin/*.php
 
 if [ "$OS" == "mac" ]; then
-    # macOS - Check if Apache is installed
-    if ! command -v httpd &> /dev/null; then
-        echo "❌ Apache not found. Please install it using:"
-        echo "   brew install httpd"
-        exit 1
-    fi
-    
-    # Check if PHP is installed
+    # macOS - Check if PHP is installed
+    # Try to find PHP in common Homebrew locations
     if ! command -v php &> /dev/null; then
-        echo "❌ PHP not found. Please install it using:"
-        echo "   brew install php"
-        exit 1
+        if [ -f "/opt/homebrew/bin/php" ]; then
+            export PATH="/opt/homebrew/bin:$PATH"
+        elif [ -f "/usr/local/bin/php" ]; then
+            export PATH="/usr/local/bin:$PATH"
+        else
+            echo "❌ PHP not found. Please install it using:"
+            echo "   brew install php"
+            exit 1
+        fi
     fi
     
     # Start Apache using built-in server or httpd
