@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Funds - SecureBank</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏦 SecureBank</h1>
+            <p class="tagline">Your Trusted Banking Partner</p>
+        </header>
+
+        <nav class="menu">
+            <a href="index.html">Home</a>
+            <a href="transfer.html" class="active">Transfer Funds</a>
+            <a href="statement.html">Account Statement</a>
+            <a href="history.html">Transaction History</a>
+        </nav>
+
+        <main>
+            <div class="form-card">
+                <h2>💰 Transfer Funds</h2>
+                <p class="subtitle">Transfer money to another account</p>
+
+                <form id="transferForm" action="cgi-bin/transfer.php" method="POST">
+                    <div class="form-group">
+                        <label for="recipient">Recipient Account Number:</label>
+                        <input type="text" id="recipient" name="recipient" placeholder="Enter account number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">Amount ($):</label>
+                        <input type="text" id="amount" name="amount" placeholder="Enter amount" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Transaction Description:</label>
+                        <input type="text" id="description" name="description" placeholder="Optional description" maxlength="100">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Transfer Funds</button>
+                </form>
+
+                <div id="result" class="result-box"></div>
+
+                <div class="vuln-hint">
+                    <h3>🔍 Vulnerability: Stack Buffer Overflow</h3>
+                    <p>This form is vulnerable to stack-based buffer overflow. The backend uses unsafe C functions like <code>strcpy()</code> without proper bounds checking.</p>
+                    <p><strong>Hint:</strong> Try sending a very long string in the recipient field (more than 50 characters).</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 SecureBank - Educational Vulnerable Application</p>
+        </footer>
+    </div>
+
+    <script src="js/transfer.js"></script>
+</body>
+</html>
+

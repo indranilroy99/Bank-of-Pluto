@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History - SecureBank</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏦 SecureBank</h1>
+            <p class="tagline">Your Trusted Banking Partner</p>
+        </header>
+
+        <nav class="menu">
+            <a href="index.html">Home</a>
+            <a href="transfer.html">Transfer Funds</a>
+            <a href="statement.html">Account Statement</a>
+            <a href="history.html" class="active">Transaction History</a>
+        </nav>
+
+        <main>
+            <div class="form-card">
+                <h2>📊 Transaction History</h2>
+                <p class="subtitle">View your transaction history</p>
+
+                <form id="historyForm" action="cgi-bin/history.php" method="POST">
+                    <div class="form-group">
+                        <label for="account">Account Number:</label>
+                        <input type="text" id="account" name="account" placeholder="Enter account number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="filter">Filter Transactions:</label>
+                        <input type="text" id="filter" name="filter" placeholder="Enter filter criteria" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="limit">Number of Records:</label>
+                        <input type="text" id="limit" name="limit" placeholder="Enter number of records" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">View History</button>
+                </form>
+
+                <div id="result" class="result-box"></div>
+
+                <div class="vuln-hint">
+                    <h3>🔍 Vulnerability: Heap Buffer Overflow</h3>
+                    <p>This form is vulnerable to heap-based buffer overflow. The backend uses unsafe memory allocation and copying functions.</p>
+                    <p><strong>Hint:</strong> Try sending a very long string in the filter field (more than 100 characters).</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 SecureBank - Educational Vulnerable Application</p>
+        </footer>
+    </div>
+
+    <script src="js/history.js"></script>
+</body>
+</html>
+

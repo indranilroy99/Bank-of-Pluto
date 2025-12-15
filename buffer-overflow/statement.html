@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Statement - SecureBank</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏦 SecureBank</h1>
+            <p class="tagline">Your Trusted Banking Partner</p>
+        </header>
+
+        <nav class="menu">
+            <a href="index.html">Home</a>
+            <a href="transfer.html">Transfer Funds</a>
+            <a href="statement.html" class="active">Account Statement</a>
+            <a href="history.html">Transaction History</a>
+        </nav>
+
+        <main>
+            <div class="form-card">
+                <h2>📄 Account Statement</h2>
+                <p class="subtitle">Generate your account statement</p>
+
+                <form id="statementForm" action="cgi-bin/statement.php" method="POST">
+                    <div class="form-group">
+                        <label for="account">Account Number:</label>
+                        <input type="text" id="account" name="account" placeholder="Enter your account number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="format">Statement Format:</label>
+                        <input type="text" id="format" name="format" placeholder="e.g., PDF, TXT, HTML" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Generate Statement</button>
+                </form>
+
+                <div id="result" class="result-box"></div>
+
+                <div class="vuln-hint">
+                    <h3>🔍 Vulnerability: Format String</h3>
+                    <p>This form is vulnerable to format string attacks. The backend uses <code>printf()</code> with user-controlled input.</p>
+                    <p><strong>Hint:</strong> Try using format specifiers like <code>%x</code>, <code>%s</code>, <code>%n</code> in the format field.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 SecureBank - Educational Vulnerable Application</p>
+        </footer>
+    </div>
+
+    <script src="js/statement.js"></script>
+</body>
+</html>
+

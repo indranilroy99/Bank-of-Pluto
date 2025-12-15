@@ -1,0 +1,33 @@
+# Compiled binaries
+bin/
+*.o
+*.so
+*.a
+
+# Build artifacts
+*.exe
+*.out
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Apache logs (if in project directory)
+apache-error.log
+apache-access.log
+
