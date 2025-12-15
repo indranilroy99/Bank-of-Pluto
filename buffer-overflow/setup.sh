@@ -1,25 +1,18 @@
 #!/bin/bash
 
-# Bank of Pluto Setup Script
-# This script helps set up the vulnerable web application on Kali Linux
+# Bank of Pluto - Comprehensive Setup Script
+# Checks all dependencies and OS before installation
 
-echo "🏦 Bank of Pluto - Buffer Overflow Vulnerable App Setup"
-echo "=================================================="
+echo "Bank of Pluto - Setup and Dependency Check"
+echo "==========================================="
 echo ""
 
-# Check if running as root for certain operations
-if [ "$EUID" -eq 0 ]; then 
-    echo "⚠️  Please don't run this script as root. It will ask for sudo when needed."
-    exit 1
-fi
-
-# Colors for output
+# Colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
+NC='\033[0m'
 
-# Function to print status
 print_status() {
     echo -e "${GREEN}[+]${NC} $1"
 }
@@ -32,157 +25,194 @@ print_warning() {
     echo -e "${YELLOW}[!]${NC} $1"
 }
 
-# Check prerequisites
-print_status "Checking prerequisites..."
-
-# Check for GCC
-if ! command -v gcc &> /dev/null; then
-    print_error "GCC not found. Installing..."
-    sudo apt update && sudo apt install -y gcc
-else
-    print_status "GCC found"
+# Check if running as root
+if [ "$EUID" -eq 0 ]; then 
+    print_error "Please don't run this script as root. It will ask for sudo when needed."
+    exit 1
 fi
 
-# Check for Make
-if ! command -v make &> /dev/null; then
-    print_error "Make not found. Installing..."
-    sudo apt update && sudo apt install -y make
+# Detect OS
+echo "Step 1: Detecting Operating System..."
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    OS="mac"
+    print_status "Detected: macOS"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    OS="linux"
+    print_status "Detected: Linux"
 else
-    print_status "Make found"
+    print_error "Unsupported OS: $OSTYPE"
+    exit 1
+fi
+echo ""
+
+# Check dependencies
+echo "Step 2: Checking Dependencies..."
+echo "-----------------------------------"
+
+MISSING_DEPS=0
+
+# Check Git
+if command -v git &> /dev/null; then
+    print_status "Git: $(git --version | head -n1)"
+else
+    print_error "Git: Not found"
+    MISSING_DEPS=1
 fi
 
-# Check for Apache
-if ! command -v apache2 &> /dev/null; then
-    print_error "Apache2 not found. Installing..."
-    sudo apt update && sudo apt install -y apache2
+# Check GCC
+if command -v gcc &> /dev/null; then
+    print_status "GCC: $(gcc --version | head -n1)"
 else
-    print_status "Apache2 found"
+    print_error "GCC: Not found"
+    MISSING_DEPS=1
 fi
 
-# Check for PHP
-if ! command -v php &> /dev/null; then
-    print_error "PHP not found. Installing..."
-    sudo apt update && sudo apt install -y php libapache2-mod-php
+# Check Make
+if command -v make &> /dev/null; then
+    print_status "Make: $(make --version | head -n1)"
 else
-    print_status "PHP found"
+    print_error "Make: Not found"
+    MISSING_DEPS=1
 fi
 
-# Compile vulnerable programs
-print_status "Compiling vulnerable C programs..."
-make clean
-if make; then
+# Check PHP
+PHP_CMD=""
+if [ "$OS" == "mac" ]; then
+    if [ -f "/opt/homebrew/bin/php" ]; then
+        PHP_CMD="/opt/homebrew/bin/php"
+        print_status "PHP: $($PHP_CMD --version | head -n1)"
+    elif [ -f "/usr/local/bin/php" ]; then
+        PHP_CMD="/usr/local/bin/php"
+        print_status "PHP: $($PHP_CMD --version | head -n1)"
+    elif command -v php &> /dev/null; then
+        PHP_CMD="php"
+        print_status "PHP: $(php --version | head -n1)"
+    else
+        print_error "PHP: Not found"
+        MISSING_DEPS=1
+    fi
+else
+    if command -v php &> /dev/null; then
+        PHP_CMD="php"
+        print_status "PHP: $(php --version | head -n1)"
+    else
+        print_error "PHP: Not found"
+        MISSING_DEPS=1
+    fi
+fi
+
+# Linux-specific: Check Apache
+if [ "$OS" == "linux" ]; then
+    if command -v apache2 &> /dev/null; then
+        print_status "Apache2: $(apache2 -v | head -n1)"
+    else
+        print_error "Apache2: Not found"
+        MISSING_DEPS=1
+    fi
+fi
+
+echo ""
+
+# Install missing dependencies
+if [ $MISSING_DEPS -eq 1 ]; then
+    print_warning "Some dependencies are missing."
+    echo ""
+    
+    if [ "$OS" == "mac" ]; then
+        echo "To install missing dependencies on macOS, run:"
+        echo "  brew install php gcc make git"
+        echo ""
+        read -p "Would you like to install missing dependencies now? (y/n): " install_choice
+        if [ "$install_choice" = "y" ] || [ "$install_choice" = "Y" ]; then
+            if ! command -v brew &> /dev/null; then
+                print_error "Homebrew not found. Please install Homebrew first:"
+                echo "  /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+                exit 1
+            fi
+            print_status "Installing missing dependencies..."
+            brew install php gcc make git 2>/dev/null || {
+                print_error "Failed to install dependencies. Please install manually."
+                exit 1
+            }
+            # Update PHP_CMD after installation
+            if [ -f "/opt/homebrew/bin/php" ]; then
+                PHP_CMD="/opt/homebrew/bin/php"
+            elif [ -f "/usr/local/bin/php" ]; then
+                PHP_CMD="/usr/local/bin/php"
+            else
+                PHP_CMD="php"
+            fi
+        else
+            print_error "Please install missing dependencies before continuing."
+            exit 1
+        fi
+    else
+        echo "To install missing dependencies on Linux, run:"
+        echo "  sudo apt update && sudo apt install -y apache2 php libapache2-mod-php gcc make git"
+        echo ""
+        read -p "Would you like to install missing dependencies now? (y/n): " install_choice
+        if [ "$install_choice" = "y" ] || [ "$install_choice" = "Y" ]; then
+            print_status "Installing missing dependencies..."
+            sudo apt update && sudo apt install -y apache2 php libapache2-mod-php gcc make git || {
+                print_error "Failed to install dependencies. Please install manually."
+                exit 1
+            }
+        else
+            print_error "Please install missing dependencies before continuing."
+            exit 1
+        fi
+    fi
+    echo ""
+fi
+
+# Verify PHP works
+if [ -n "$PHP_CMD" ]; then
+    if ! $PHP_CMD --version &> /dev/null; then
+        print_error "PHP is installed but not working properly."
+        exit 1
+    fi
+fi
+
+print_status "All dependencies are satisfied!"
+echo ""
+
+# Get script directory
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+cd "$SCRIPT_DIR"
+
+# Compile programs
+echo "Step 3: Compiling Vulnerable Programs..."
+echo "----------------------------------------"
+if [ ! -d "src" ]; then
+    print_error "Source directory not found. Are you in the correct directory?"
+    exit 1
+fi
+
+make clean > /dev/null 2>&1
+if make > /dev/null 2>&1; then
     print_status "Compilation successful!"
 else
-    print_error "Compilation failed!"
+    print_error "Compilation failed! Please check if GCC is installed correctly."
     exit 1
 fi
 
 # Set permissions
-print_status "Setting permissions..."
+echo ""
+echo "Step 4: Setting Permissions..."
+echo "--------------------------------"
 chmod +x bin/* 2>/dev/null
-chmod +x cgi-bin/*.php
-make install
+chmod +x cgi-bin/*.php 2>/dev/null
+chmod +x *.sh 2>/dev/null
+print_status "Permissions set"
 
-# Get current directory
-CURRENT_DIR=$(pwd)
-print_status "Current directory: $CURRENT_DIR"
-
-# Ask user about installation location
 echo ""
-print_warning "Choose installation method:"
-echo "1) Copy to /var/www/html/buffer-overflow (recommended)"
-echo "2) Create symbolic link to current directory"
-echo "3) Skip (manual setup)"
-read -p "Enter choice [1-3]: " choice
-
-case $choice in
-    1)
-        print_status "Copying files to /var/www/html/buffer-overflow..."
-        sudo rm -rf /var/www/html/buffer-overflow
-        sudo cp -r "$CURRENT_DIR" /var/www/html/buffer-overflow
-        sudo chown -R www-data:www-data /var/www/html/buffer-overflow
-        INSTALL_DIR="/var/www/html/buffer-overflow"
-        ;;
-    2)
-        print_status "Creating symbolic link..."
-        sudo rm -f /var/www/html/buffer-overflow
-        sudo ln -s "$CURRENT_DIR" /var/www/html/buffer-overflow
-        sudo chown -R www-data:www-data "$CURRENT_DIR"
-        INSTALL_DIR="/var/www/html/buffer-overflow"
-        ;;
-    3)
-        print_warning "Skipping file installation. Please configure manually."
-        INSTALL_DIR="$CURRENT_DIR"
-        ;;
-    *)
-        print_error "Invalid choice. Skipping file installation."
-        INSTALL_DIR="$CURRENT_DIR"
-        ;;
-esac
-
-# Configure Apache
-print_status "Configuring Apache..."
-
-# Enable required modules
-sudo a2enmod cgi 2>/dev/null
-sudo a2enmod rewrite 2>/dev/null
-
-# Check if configuration already exists
-if ! grep -q "buffer-overflow" /etc/apache2/sites-available/000-default.conf 2>/dev/null; then
-    print_status "Adding Apache configuration..."
-    
-    # Backup original config
-    sudo cp /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf.backup
-    
-    # Add configuration
-    sudo tee -a /etc/apache2/sites-available/000-default.conf > /dev/null <<EOF
-
-# Buffer Overflow Vulnerable App Configuration
-<Directory $INSTALL_DIR>
-    Options +ExecCGI
-    AddHandler cgi-script .php
-    AllowOverride None
-    Require all granted
-</Directory>
-
-<Directory $INSTALL_DIR/cgi-bin>
-    Options +ExecCGI
-    AddHandler cgi-script .php
-    AllowOverride None
-    Require all granted
-</Directory>
-EOF
-    
-    print_status "Apache configuration added"
-else
-    print_warning "Apache configuration already exists"
-fi
-
-# Restart Apache
-print_status "Restarting Apache..."
-sudo systemctl restart apache2
-
-# Check Apache status
-if sudo systemctl is-active --quiet apache2; then
-    print_status "Apache is running"
-else
-    print_error "Apache failed to start. Please check: sudo systemctl status apache2"
-fi
-
-# Final instructions
+echo "==========================================="
+print_status "Setup Complete!"
 echo ""
-echo "=================================================="
-print_status "Setup complete!"
+echo "All dependencies checked and satisfied."
+echo "Programs compiled successfully."
 echo ""
-echo "📋 Next steps:"
-echo "1. Open your browser and navigate to:"
-echo "   http://localhost/buffer-overflow/"
+echo "Next steps:"
+echo "  1. Run: ./start.sh"
+echo "  2. Open: http://localhost:8080"
 echo ""
-echo "2. If you see the Bank of Pluto homepage, setup is successful!"
-echo ""
-echo "3. Read README.md for exploitation instructions"
-echo ""
-print_warning "Remember: This is an intentionally vulnerable application!"
-print_warning "Use only for educational purposes in a controlled environment."
-echo ""
-

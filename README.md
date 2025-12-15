@@ -120,7 +120,7 @@ sudo apt update
 sudo apt install -y apache2 php libapache2-mod-php gcc make git
 ```
 
-## 🚀 Detailed Installation
+## Installation and Usage
 
 ### Step 1: Clone the Repository
 
@@ -130,225 +130,71 @@ git clone https://github.com/indranilroy99/Bank-of-Pluto.git
 cd Bank-of-Pluto/buffer-overflow
 ```
 
-### Step 2: Compile the Vulnerable Programs
+### Step 2: Run Setup (Optional but Recommended)
 
-The start script will automatically compile the programs, but you can also do it manually:
+The setup script checks all dependencies and compiles the programs:
 
 ```bash
-make
+./setup.sh
 ```
 
-This creates three binaries in the `bin/` directory:
-- `bin/stack_overflow` - Stack buffer overflow vulnerability
-- `bin/heap_overflow` - Heap buffer overflow vulnerability  
-- `bin/format_string` - Format string vulnerability
+This will:
+- Detect your operating system (macOS or Linux)
+- Check for all required dependencies (PHP, GCC, Make, Git)
+- Install missing dependencies (with your permission)
+- Compile the vulnerable C programs
+- Set proper permissions
 
-**Note**: Programs are compiled with security features disabled:
-- `-fno-stack-protector` (disables stack canaries)
-- `-z execstack` (Linux only - makes stack executable)
-- `-g` (debug symbols)
-- `-O0` (no optimization)
+### Step 3: Start the Application
 
-## 🚀 Running the Application
-
-### Super Simple - One Command:
-
-From the `buffer-overflow` directory, just run:
 ```bash
 ./start.sh
 ```
 
-The script will:
-- ✅ Automatically find PHP (even if installed via Homebrew on macOS)
-- ✅ Compile binaries if needed
-- ✅ Start the server on `http://localhost:8080`
-- ✅ Show you the URL to open
+The server will start and display: `http://localhost:8080`
 
-**That's it!** Open `http://localhost:8080` in your browser.
+Open this URL in your browser.
 
-### Manual Setup
+### Step 4: Stop the Application
 
-#### For macOS:
-
-Navigate to the buffer-overflow directory:
-```bash
-cd buffer-overflow
-```
-
-The start script uses PHP's built-in server:
+When finished testing:
 
 ```bash
-php -S localhost:8080 -t . router.php
-```
-
-Then open your browser to: `http://localhost:8080`
-
-#### For Linux:
-
-1. **Navigate to buffer-overflow directory**:
-```bash
-cd ~/Bank-of-Pluto/buffer-overflow
-```
-
-2. **Copy files to web directory**:
-```bash
-sudo cp -r ~/Bank-of-Pluto/buffer-overflow /var/www/html/buffer-overflow
-```
-
-3. **Configure Apache**:
-```bash
-sudo a2enmod cgi
-sudo a2enmod rewrite
-```
-
-Edit Apache configuration:
-```bash
-sudo nano /etc/apache2/sites-available/000-default.conf
-```
-
-Add inside `<VirtualHost *:80>`:
-```apache
-<Directory /var/www/html/buffer-overflow>
-    Options +ExecCGI
-    AddHandler cgi-script .php
-    AllowOverride None
-    Require all granted
-</Directory>
-
-<Directory /var/www/html/buffer-overflow/cgi-bin>
-    Options +ExecCGI
-    AddHandler cgi-script .php
-    AllowOverride None
-    Require all granted
-</Directory>
-```
-
-4. **Set permissions**:
-```bash
-sudo chown -R www-data:www-data /var/www/html/buffer-overflow
-sudo chmod +x /var/www/html/buffer-overflow/bin/*
-sudo chmod +x /var/www/html/buffer-overflow/cgi-bin/*.php
-```
-
-5. **Start Apache**:
-```bash
-sudo systemctl start apache2
-sudo systemctl status apache2
-```
-
-6. **Access the application**:
-Open your browser to: `http://localhost/buffer-overflow/`
-
-## 🛑 Stopping the Application
-
-### Quick Stop
-
-Navigate to the buffer-overflow directory and run the stop script:
-
-```bash
-cd buffer-overflow
 ./stop.sh
 ```
 
-### Manual Stop
+### Step 5: Cleanup (Optional)
 
-#### For macOS:
-
-Find and kill the PHP server process:
-```bash
-lsof -ti:8080 | xargs kill
-```
-
-Or press `Ctrl+C` if running in terminal.
-
-#### For Linux:
-
-Stop Apache:
-```bash
-sudo systemctl stop apache2
-```
-
-## 🧹 Cleanup
-
-After completing the lab, you can completely remove all installed files and configurations using the cleanup script:
+To remove all installed files and restore your system:
 
 ```bash
-cd buffer-overflow
 ./cleanup.sh
 ```
 
-This script will:
-- Stop the web server
-- Remove compiled binaries
-- Remove Apache configurations (Linux)
-- Remove installed files from web directories
-- Restore system to normal state
+**That's it!** The application is ready to use.
 
-**Note**: The cleanup script will ask for confirmation before proceeding.
+## Learning Outcomes
 
-### Manual Cleanup
+This application demonstrates critical memory corruption vulnerabilities and their exploitation:
 
-If you prefer to clean up manually:
+**Vulnerability Types:**
+- Stack-based buffer overflows: Memory corruption on the call stack
+- Heap-based buffer overflows: Dynamic memory allocation vulnerabilities
+- Format string vulnerabilities: Information disclosure and arbitrary memory access
 
-#### For macOS:
+**Technical Concepts:**
+- Memory layout and organization (stack, heap, code segments)
+- Unsafe C function usage (`strcpy`, `gets`, `sprintf`, `printf`)
+- Exploitation techniques and payload construction
+- Program termination signals (SIGSEGV, SIGABRT)
+- Memory corruption detection and impact
 
-```bash
-cd buffer-overflow
-# Stop the server
-./stop.sh
-
-# Remove binaries
-make clean
-rm -rf bin/
-```
-
-#### For Linux:
-
-```bash
-# Stop Apache
-sudo systemctl stop apache2
-
-# Remove configurations
-sudo sed -i '/# Buffer Overflow Vulnerable App Configuration/,/<\/Directory>/d' /etc/apache2/sites-available/000-default.conf
-sudo rm -f /etc/apache2/sites-available/buffer-overflow.conf
-sudo a2dissite buffer-overflow.conf 2>/dev/null
-
-# Remove installed files
-sudo rm -rf /var/www/html/buffer-overflow
-
-# Reload Apache
-sudo systemctl reload apache2
-
-# Remove binaries
-cd ~/Bank-of-Pluto/buffer-overflow
-make clean
-rm -rf bin/
-```
-
-## 📚 Educational Objectives
-
-After completing this lab, you will be able to understand:
-
-1. **Buffer Overflow Concepts**:
-   - Difference between stack and heap overflows
-   - How unsafe functions (`strcpy`, `gets`, `sprintf`) cause vulnerabilities
-   - Memory layout (stack vs heap)
-
-2. **Format String Vulnerabilities**:
-   - How format specifiers work
-   - Memory reading through format strings
-   - Memory writing through `%n`
-
-3. **Exploitation Techniques**:
-   - Basic buffer overflow exploitation
-   - Understanding program crashes
-   - Memory corruption concepts
-
-4. **Defense Mechanisms**:
-   - Stack canaries (disabled in this app)
-   - ASLR (Address Space Layout Randomization)
-   - Non-executable stack (disabled in this app)
-   - Safe alternatives (`strncpy`, `snprintf`)
+**Security Implications:**
+- Code execution through memory corruption
+- Information disclosure via format strings
+- Denial of service through program crashes
+- Defense mechanisms: stack canaries, ASLR, DEP/NX bit
+- Secure coding practices and safe function alternatives
 
 ## 🔧 Troubleshooting
 
@@ -408,13 +254,17 @@ Or modify `buffer-overflow/start.sh` to use a different port.
 - [Format String Vulnerabilities](https://owasp.org/www-community/attacks/Format_string_attack)
 - [Stack vs Heap Memory](https://www.geeksforgeeks.org/stack-vs-heap-memory-allocation/)
 
-## 👥 Contributing
+## Contributing
 
-This is an educational project. Feel free to:
-- Report issues
-- Suggest improvements
-- Add more vulnerability examples
-- Improve documentation
+Contributions to this project are welcome. Areas for improvement include:
+
+- Additional vulnerability examples and variations
+- Enhanced documentation and guides
+- Cross-platform compatibility improvements
+- Performance optimizations
+- Security research and analysis
+
+Please ensure all contributions maintain the educational focus and include appropriate documentation.
 
 ## 📄 License
 
@@ -426,5 +276,5 @@ Inspired by OWASP Juice Shop and other intentionally vulnerable applications des
 
 ---
 
-**Happy Learning! Stay Secure! 🔒**
+**Happy Hacking**
 

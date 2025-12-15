@@ -4,10 +4,11 @@ document.getElementById('transferForm').addEventListener('submit', function(e) {
     const recipient = document.getElementById('recipient').value.trim();
     const resultBox = document.getElementById('result');
     
-    // Validate account number (10 digits)
-    if (!/^\d{10}$/.test(recipient)) {
+    // Validate: must contain at least 10 digits (but can have more characters)
+    const digitCount = (recipient.match(/\d/g) || []).length;
+    if (digitCount < 10) {
         resultBox.className = 'result-box error';
-        resultBox.textContent = 'Please enter a valid 10-digit account number.';
+        resultBox.textContent = 'Please enter an account number with at least 10 digits.';
         return;
     }
     
@@ -36,13 +37,14 @@ document.getElementById('transferForm').addEventListener('submit', function(e) {
 document.getElementById('recipient').addEventListener('input', function(e) {
     const value = e.target.value.trim();
     const errorMsg = document.getElementById('recipient-error');
+    const digitCount = (value.match(/\d/g) || []).length;
     
-    if (value && !/^\d{10}$/.test(value)) {
+    if (value && digitCount < 10) {
         if (!errorMsg) {
             const msg = document.createElement('small');
             msg.id = 'recipient-error';
             msg.style.color = '#dc3545';
-            msg.textContent = 'Please enter a 10-digit account number';
+            msg.textContent = 'Account number must contain at least 10 digits';
             e.target.parentNode.appendChild(msg);
         }
     } else {
