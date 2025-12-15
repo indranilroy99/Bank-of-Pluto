@@ -6,6 +6,64 @@ An intentionally vulnerable banking web application designed for educational pur
 
 **This application is intentionally vulnerable and should ONLY be used for educational purposes in a controlled environment. Do not deploy this application on public networks or use it with real credentials.**
 
+## ⚡ Quick Start
+
+### For macOS:
+
+1. **Install prerequisites** (one-time setup):
+   ```bash
+   brew install php gcc make git
+   ```
+
+2. **Clone and run**:
+   ```bash
+   cd ~
+   git clone https://github.com/indranilroy99/Bank-of-Pluto.git
+   cd Bank-of-Pluto/buffer-overflow
+   ./start.sh
+   ```
+
+3. **Open your browser**: `http://localhost:8080`
+
+4. **To stop**: Press `Ctrl+C` in the terminal, or run `./stop.sh`
+
+### For Linux (Kali/Ubuntu):
+
+1. **Install prerequisites** (one-time setup):
+   ```bash
+   sudo apt update
+   sudo apt install -y apache2 php libapache2-mod-php gcc make git
+   ```
+
+2. **Clone and setup**:
+   ```bash
+   cd ~
+   git clone https://github.com/indranilroy99/Bank-of-Pluto.git
+   cd Bank-of-Pluto/buffer-overflow
+   sudo cp -r . /var/www/html/buffer-overflow
+   sudo chmod +x /var/www/html/buffer-overflow/bin/*
+   sudo chmod +x /var/www/html/buffer-overflow/cgi-bin/*.php
+   ```
+
+3. **Configure Apache** (add to `/etc/apache2/sites-available/000-default.conf`):
+   ```apache
+   <Directory /var/www/html/buffer-overflow>
+       Options +ExecCGI
+       AddHandler cgi-script .php
+       Require all granted
+   </Directory>
+   ```
+
+4. **Start Apache**:
+   ```bash
+   sudo a2enmod cgi
+   sudo systemctl restart apache2
+   ```
+
+5. **Open your browser**: `http://localhost/buffer-overflow/`
+
+---
+
 ## 📋 Table of Contents
 
 - [Overview](#overview)
@@ -72,7 +130,7 @@ sudo apt update
 sudo apt install -y apache2 php libapache2-mod-php gcc make git
 ```
 
-## 🚀 Installation
+## 🚀 Detailed Installation
 
 ### Step 1: Clone the Repository
 
@@ -84,47 +142,39 @@ cd Bank-of-Pluto/buffer-overflow
 
 ### Step 2: Compile the Vulnerable Programs
 
-The Makefile compiles the C programs with disabled security features to make exploitation easier:
+The start script will automatically compile the programs, but you can also do it manually:
 
 ```bash
 make
 ```
 
-This will create three binaries in the `bin/` directory:
-- `bin/stack_overflow`
-- `bin/heap_overflow`
-- `bin/format_string`
+This creates three binaries in the `bin/` directory:
+- `bin/stack_overflow` - Stack buffer overflow vulnerability
+- `bin/heap_overflow` - Heap buffer overflow vulnerability  
+- `bin/format_string` - Format string vulnerability
 
-**Note**: The programs are compiled with:
+**Note**: Programs are compiled with security features disabled:
 - `-fno-stack-protector` (disables stack canaries)
 - `-z execstack` (Linux only - makes stack executable)
 - `-g` (debug symbols)
 - `-O0` (no optimization)
 
-### Step 3: Set Permissions
-
-```bash
-make install
-chmod +x cgi-bin/*.php
-chmod +x *.sh
-```
-
 ## 🚀 Running the Application
 
-### Quick Start (Recommended)
+### macOS - Super Simple:
 
-Navigate to the buffer-overflow directory and run the start script:
-
+Just run:
 ```bash
-cd buffer-overflow
 ./start.sh
 ```
 
-This script will:
-- Detect your operating system (macOS or Linux)
-- Compile binaries if needed
-- Start the appropriate web server
-- Display the URL to access the application
+The script will:
+- ✅ Automatically find PHP (even if installed via Homebrew)
+- ✅ Compile binaries if needed
+- ✅ Start the server on `http://localhost:8080`
+- ✅ Show you the URL to open
+
+**That's it!** Open `http://localhost:8080` in your browser.
 
 ### Manual Setup
 
