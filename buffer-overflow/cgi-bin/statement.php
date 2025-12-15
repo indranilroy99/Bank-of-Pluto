@@ -60,7 +60,7 @@ if ($format_attack && !$advanced_payload) {
     echo "• Memory layout: Revealed through pointer addresses\n";
     echo "• Potential sensitive data: May be present in stack dump\n";
     echo "\n";
-    echo "⚠️  This output contains low-level system information.\n";
+    echo "Note: This output contains low-level system information.\n";
     echo "─────────────────────────────────────────────────────────────\n";
 }
 

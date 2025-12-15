@@ -21,16 +21,20 @@ void process_history(char *account, char *filter, char *limit_str) {
     // VULNERABLE: Heap overflow if filter is too long
     strcpy(filter_buffer, filter);  // Can overflow if filter > 100 chars
     
-    printf("Transaction History for Account: %s\n", account_buffer);
+    printf("BANK OF PLUTO\n");
+    printf("Transaction History\n");
+    printf("\n");
+    printf("Account Number: %s\n", account_buffer);
     printf("Filter: %s\n", filter_buffer);
-    printf("Records to display: %d\n\n", limit);
+    printf("Records Displayed: %d\n", limit);
+    printf("\n");
     
-    // Simulate transaction records
-    printf("Date       | Type      | Amount    | Balance\n");
-    printf("-----------|-----------|-----------|----------\n");
-    printf("2024-01-15 | Deposit   | $500.00   | $12,450.00\n");
-    printf("2024-01-10 | Transfer  | -$200.00  | $11,950.00\n");
-    printf("2024-01-05 | Withdraw  | -$100.00  | $12,150.00\n");
+    printf("Date          Type        Amount        Balance\n");
+    printf("2024-12-15    Deposit     $500.00       $12,450.00\n");
+    printf("2024-12-10    Transfer    -$200.00      $11,950.00\n");
+    printf("2024-12-05    Withdraw    -$100.00      $12,150.00\n");
+    printf("\n");
+    printf("For inquiries, contact: bank@pluto.co\n");
     
     free(filter_buffer);
     free(account_buffer);
@@ -50,4 +54,3 @@ int main(int argc, char *argv[]) {
     
     return 0;
 }
-

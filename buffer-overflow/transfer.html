@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>🏦 Bank of Pluto</h1>
+            <h1>Bank of Pluto</h1>
             <p class="tagline">Your Trusted Banking Partner</p>
         </header>
 
@@ -22,13 +22,13 @@
 
         <main>
             <div class="form-card">
-                <h2>💰 Transfer Funds</h2>
+                <h2>Transfer Funds</h2>
                 <p class="subtitle">Transfer money to another account</p>
 
                 <form id="transferForm" action="cgi-bin/transfer.php" method="POST">
                     <div class="form-group">
                         <label for="recipient">Recipient Account Number:</label>
-                        <input type="text" id="recipient" name="recipient" placeholder="Enter account number" required>
+                        <input type="text" id="recipient" name="recipient" placeholder="Enter 10-digit account number" maxlength="10" pattern="[0-9]{10}" required>
                     </div>
 
                     <div class="form-group">
@@ -49,7 +49,8 @@
         </main>
 
         <footer>
-            <p>&copy; 2024 Bank of Pluto - Educational Vulnerable Application</p>
+            <p>&copy; 2025 Bank of Pluto - Vuln by Design</p>
+            <p style="margin-top: 5px; font-size: 0.9em; opacity: 0.8;">made with ♥ by neil</p>
         </footer>
     </div>
 

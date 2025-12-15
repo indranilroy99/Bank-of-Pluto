@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 
 // Vulnerable function: Stack-based buffer overflow
 void process_transfer(char *recipient, char *amount, char *description) {
@@ -17,10 +18,14 @@ void process_transfer(char *recipient, char *amount, char *description) {
         strcpy(desc_buffer, description);  // Another vulnerable copy
     }
     
-    printf("Transfer processed successfully!\n");
-    printf("Recipient: %s\n", buffer);
+    printf("Transfer Confirmation\n");
+    printf("\n");
+    printf("Recipient Account: %s\n", buffer);
     printf("Amount: $%s\n", amount_buffer);
     printf("Status: Completed\n");
+    printf("Transaction ID: TRX-%ld\n", (long)time(NULL) % 1000000);
+    printf("\n");
+    printf("Your transfer has been processed successfully.\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -37,4 +42,3 @@ int main(int argc, char *argv[]) {
     
     return 0;
 }
-

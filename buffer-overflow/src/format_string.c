@@ -10,21 +10,31 @@ void generate_statement(char *account, char *format) {
     strncpy(account_buffer, account, sizeof(account_buffer) - 1);
     account_buffer[sizeof(account_buffer) - 1] = '\0';
     
-    printf("=== Account Statement ===\n");
+    printf("BANK OF PLUTO\n");
+    printf("Account Statement\n");
+    printf("Generated: %s\n", "2024-12-15");
+    printf("\n");
     printf("Account Number: %s\n", account_buffer);
-    printf("Statement Format: ");
+    printf("Statement Period: December 2024\n");
+    printf("Format: ");
     
     // VULNERABLE: Using user input directly in printf
     // This allows format string attacks!
     printf(format);  // Dangerous! User can inject format specifiers
-    printf("\n\n");
+    printf("\n");
+    printf("\n");
     
-    printf("Date       | Description           | Amount    | Balance\n");
-    printf("-----------|-----------------------|-----------|----------\n");
-    printf("2024-01-20 | Salary Deposit        | $3,000.00 | $12,450.00\n");
-    printf("2024-01-15 | Online Purchase       | -$150.00  | $9,450.00\n");
-    printf("2024-01-10 | Bill Payment          | -$200.00  | $9,600.00\n");
-    printf("2024-01-05 | Interest Earned       | $50.00    | $9,800.00\n");
+    printf("TRANSACTION HISTORY\n");
+    printf("\n");
+    printf("Date          Description              Amount        Balance\n");
+    printf("2024-12-15    Salary Deposit           $3,000.00     $12,450.00\n");
+    printf("2024-12-10    Online Purchase          -$150.00      $9,450.00\n");
+    printf("2024-12-05    Bill Payment             -$200.00      $9,600.00\n");
+    printf("2024-12-01    Interest Earned          $50.00       $9,800.00\n");
+    printf("\n");
+    printf("Current Balance: $12,450.00\n");
+    printf("\n");
+    printf("For inquiries, contact: bank@pluto.co\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -40,4 +50,3 @@ int main(int argc, char *argv[]) {
     
     return 0;
 }
-

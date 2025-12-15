@@ -37,7 +37,7 @@ if ($return_code === 133 || $return_code === 139) {
     echo "We encountered an internal error while processing your transfer request.\n";
     echo "Please verify that the recipient account number is correct and try again.\n\n";
     echo "If the problem persists, please contact our support team at:\n";
-    echo "support@bankofpluto.com or call 1-800-BANK-PLT\n\n";
+    echo "bank@pluto.co or call 1-800-BANK-PLT\n\n";
     echo "Reference ID: " . substr(md5(time() . $recipient), 0, 12) . "\n";
     echo "Timestamp: " . date('Y-m-d H:i:s') . "\n";
 } elseif ($return_code !== 0) {
