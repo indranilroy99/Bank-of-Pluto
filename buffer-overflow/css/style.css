@@ -5,8 +5,8 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f7fa;
     min-height: 100vh;
     padding: 20px;
 }
@@ -17,62 +17,73 @@ body {
 }
 
 header {
-    background: white;
+    background: #ffffff;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     margin-bottom: 20px;
     text-align: center;
+    border-top: 4px solid #003d82;
 }
 
 header h1 {
-    color: #667eea;
-    font-size: 2.5em;
+    color: #003d82;
+    font-size: 2.2em;
     margin-bottom: 10px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
 }
 
 .tagline {
-    color: #666;
-    font-size: 1.1em;
+    color: #6b7280;
+    font-size: 1em;
+    font-weight: 400;
 }
 
 .menu {
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     margin-bottom: 20px;
     display: flex;
-    gap: 20px;
+    gap: 8px;
     justify-content: center;
 }
 
 .menu a {
     text-decoration: none;
-    color: #667eea;
+    color: #4b5563;
     padding: 10px 20px;
-    border-radius: 5px;
-    transition: all 0.3s;
+    border-radius: 6px;
+    transition: all 0.2s;
     font-weight: 500;
+    font-size: 0.95em;
 }
 
-.menu a:hover,
+.menu a:hover {
+    background: #f3f4f6;
+    color: #003d82;
+}
+
 .menu a.active {
-    background: #667eea;
+    background: #003d82;
     color: white;
 }
 
 main {
-    background: white;
+    background: #ffffff;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
     margin-bottom: 20px;
 }
 
 .welcome-card h2 {
-    color: #667eea;
+    color: #1f2937;
     margin-bottom: 15px;
+    font-weight: 600;
+    font-size: 1.8em;
 }
 
 .account-summary {
@@ -83,27 +94,32 @@ main {
 }
 
 .account-card {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #003d82 0%, #0052a3 100%);
     color: white;
     padding: 25px;
-    border-radius: 10px;
+    border-radius: 8px;
     text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 61, 130, 0.2);
 }
 
 .account-card h3 {
-    font-size: 1em;
+    font-size: 0.9em;
     margin-bottom: 10px;
     opacity: 0.9;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .balance {
     font-size: 2em;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 .account-num {
     font-size: 1.5em;
-    font-weight: bold;
+    font-weight: 600;
+    letter-spacing: 2px;
 }
 
 .quick-actions {
@@ -111,8 +127,9 @@ main {
 }
 
 .quick-actions h3 {
-    color: #667eea;
+    color: #1f2937;
     margin-bottom: 15px;
+    font-weight: 600;
 }
 
 .action-buttons {
@@ -127,13 +144,16 @@ main {
 }
 
 .form-card h2 {
-    color: #667eea;
+    color: #1f2937;
     margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 1.8em;
 }
 
 .subtitle {
-    color: #666;
+    color: #6b7280;
     margin-bottom: 30px;
+    font-size: 0.95em;
 }
 
 .form-group {
@@ -143,129 +163,109 @@ main {
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    color: #333;
+    color: #374151;
     font-weight: 500;
+    font-size: 0.95em;
 }
 
 .form-group input {
     width: 100%;
     padding: 12px;
-    border: 2px solid #e0e0e0;
-    border-radius: 5px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
     font-size: 1em;
-    transition: border-color 0.3s;
+    transition: all 0.2s;
+    background: #ffffff;
 }
 
 .form-group input:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #003d82;
+    box-shadow: 0 0 0 3px rgba(0, 61, 130, 0.1);
 }
 
 .btn {
     padding: 12px 30px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 1em;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s;
     text-decoration: none;
     display: inline-block;
     text-align: center;
+    font-weight: 500;
 }
 
 .btn-primary {
-    background: #667eea;
+    background: #003d82;
     color: white;
     width: 100%;
 }
 
 .btn-primary:hover {
-    background: #5568d3;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: #002d62;
+    box-shadow: 0 4px 8px rgba(0, 61, 130, 0.2);
 }
 
 .btn-secondary {
-    background: #764ba2;
+    background: #4b5563;
     color: white;
 }
 
 .btn-secondary:hover {
-    background: #653a8a;
+    background: #374151;
 }
 
 .result-box {
     margin-top: 20px;
     padding: 15px;
-    border-radius: 5px;
+    border-radius: 6px;
     display: none;
+    font-size: 0.95em;
 }
 
 .result-box.success {
-    background: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
+    background: #f0fdf4;
+    color: #166534;
+    border: 1px solid #bbf7d0;
     display: block;
 }
 
 .result-box.error {
-    background: #f8d7da;
-    color: #721c24;
-    border: 1px solid #f5c6cb;
+    background: #fef2f2;
+    color: #991b1b;
+    border: 1px solid #fecaca;
     display: block;
-}
-
-.vuln-hint {
-    margin-top: 30px;
-    padding: 20px;
-    background: #fff3cd;
-    border-left: 4px solid #ffc107;
-    border-radius: 5px;
-}
-
-.vuln-hint h3 {
-    color: #856404;
-    margin-bottom: 10px;
-}
-
-.vuln-hint p {
-    color: #856404;
-    margin-bottom: 10px;
-    line-height: 1.6;
-}
-
-.vuln-hint code {
-    background: #f8f9fa;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-family: 'Courier New', monospace;
 }
 
 .info-box {
     margin-top: 30px;
     padding: 20px;
-    background: #d1ecf1;
-    border-left: 4px solid #0c5460;
-    border-radius: 5px;
+    background: #eff6ff;
+    border-left: 4px solid #003d82;
+    border-radius: 6px;
 }
 
 .info-box h3 {
-    color: #0c5460;
+    color: #003d82;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 
 .info-box p {
-    color: #0c5460;
+    color: #1e40af;
     line-height: 1.6;
+    font-size: 0.95em;
 }
 
 footer {
     text-align: center;
-    color: white;
+    color: #6b7280;
     padding: 20px;
 }
 
 footer p {
     opacity: 0.9;
+    font-size: 0.9em;
 }
-
