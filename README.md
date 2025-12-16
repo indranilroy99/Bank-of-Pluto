@@ -171,30 +171,7 @@ To remove all installed files and restore your system:
 ./cleanup.sh
 ```
 
-**That's it!** The application is ready to use.
-
-## Learning Outcomes
-
-This application demonstrates critical memory corruption vulnerabilities and their exploitation:
-
-**Vulnerability Types:**
-- Stack-based buffer overflows: Memory corruption on the call stack
-- Heap-based buffer overflows: Dynamic memory allocation vulnerabilities
-- Format string vulnerabilities: Information disclosure and arbitrary memory access
-
-**Technical Concepts:**
-- Memory layout and organization (stack, heap, code segments)
-- Unsafe C function usage (`strcpy`, `gets`, `sprintf`, `printf`)
-- Exploitation techniques and payload construction
-- Program termination signals (SIGSEGV, SIGABRT)
-- Memory corruption detection and impact
-
-**Security Implications:**
-- Code execution through memory corruption
-- Information disclosure via format strings
-- Denial of service through program crashes
-- Defense mechanisms: stack canaries, ASLR, DEP/NX bit
-- Secure coding practices and safe function alternatives
+**Voila!** The application is now ready to use.
 
 ## Troubleshooting
 
