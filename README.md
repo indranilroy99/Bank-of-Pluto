@@ -6,9 +6,9 @@ An intentionally vulnerable banking web application designed for educational pur
 
 **This application is intentionally vulnerable and should ONLY be used for educational purposes in a controlled environment. Do not deploy this application on public networks or use it with real credentials.**
 
-## ⚡ Quick Start - One Command Setup!
+## Installation & Setup
 
-### Step 1: Install Prerequisites (One-time)
+### Step 1: Install the rerequisites
 
 **macOS:**
 ```bash
@@ -47,14 +47,14 @@ cd ~/Bank-of-Pluto/buffer-overflow
 
 ---
 
-**Super Simple Commands (run from `buffer-overflow` directory):**
+**Simple Commands (run from `buffer-overflow` directory):**
 - `./start.sh` - Start the application
 - `./stop.sh` - Stop the application  
 - `./cleanup.sh` - Remove everything and restore system
 
 ---
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Overview](#overview)
 - [Vulnerabilities](#vulnerabilities)
@@ -66,7 +66,7 @@ cd ~/Bank-of-Pluto/buffer-overflow
 - [Educational Objectives](#educational-objectives)
 - [Troubleshooting](#troubleshooting)
 
-## 🎯 Overview
+## Overview
 
 Bank of Pluto is a simple banking web application that demonstrates three types of buffer overflow vulnerabilities:
 
@@ -80,7 +80,7 @@ The application consists of:
 - PHP CGI scripts that interface with the C binaries
 - Web server configuration (Apache for Linux, PHP built-in server for macOS)
 
-## 🔓 Vulnerabilities
+## Vulnerabilities
 
 ### 1. Stack Buffer Overflow (`buffer-overflow/src/stack_overflow.c`)
 - **Location**: Transfer Funds page
@@ -99,7 +99,7 @@ The application consists of:
 - **Vulnerability**: User input directly passed to `printf()`
 - **Impact**: Can read/write arbitrary memory locations
 
-## 📦 Prerequisites
+## Prerequisites
 
 ### For macOS:
 
@@ -196,7 +196,7 @@ This application demonstrates critical memory corruption vulnerabilities and the
 - Defense mechanisms: stack canaries, ASLR, DEP/NX bit
 - Secure coding practices and safe function alternatives
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Issue: Binaries not compiling on macOS
 
@@ -248,7 +248,7 @@ Or modify `buffer-overflow/start.sh` to use a different port.
 
 **This is expected behavior!** The programs are intentionally vulnerable. Crashes indicate successful buffer overflow attempts.
 
-## 📝 Additional Resources
+## Additional Resources
 
 - [OWASP Buffer Overflow](https://owasp.org/www-community/vulnerabilities/Buffer_Overflow)
 - [Format String Vulnerabilities](https://owasp.org/www-community/attacks/Format_string_attack)
@@ -256,25 +256,9 @@ Or modify `buffer-overflow/start.sh` to use a different port.
 
 ## Contributing
 
-Contributions to this project are welcome. Areas for improvement include:
-
-- Additional vulnerability examples and variations
-- Enhanced documentation and guides
-- Cross-platform compatibility improvements
-- Performance optimizations
-- Security research and analysis
-
-Please ensure all contributions maintain the educational focus and include appropriate documentation.
-
-## 📄 License
-
-This project is for educational purposes only. Use responsibly and only in controlled environments.
-
-## 🙏 Acknowledgments
-
-Inspired by OWASP Juice Shop and other intentionally vulnerable applications designed for security education.
+Contributions to this project are welcome. 
 
 ---
 
-**Happy Hacking**
+**Happy Hacking :) **
 
