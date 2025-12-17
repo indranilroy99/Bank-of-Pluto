@@ -1,8 +1,8 @@
-# 🏦 Bank of Pluto - Buffer Overflow Vulnerable Web Application
+# Bank of Pluto - Buffer Overflow Vulnerable Web Application
 
 This is an intentionally vulnerable banking web application designed for educational purposes to demonstrate buffer overflow vulnerabilities. This application is perfect for cybersecurity students learning about buffer overflow attacks in a controlled environment.
 
-## ⚠️ Disclaimer
+## Disclaimer ⚠️
 
 **This application is intentionally vulnerable and should ONLY be used for educational purposes in a controlled environment. Do not deploy this application on public networks or use it with real credentials.**
 
